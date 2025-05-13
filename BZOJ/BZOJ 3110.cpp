@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define ll long long
 #define Lb(x) (x & -x)
 using namespace std;
 
@@ -6,9 +7,9 @@ const int N = 50100;
 
 int n, m, Q, ans[N];
 
-struct Ope {int mode, l, r, k, id;};//0修改 1询问
+struct Ope {int mode, l, r; ll k; int id;};//0修改 1询问
 struct TR {
-    vector<int> sum, ly;
+    vector<ll> sum, ly;
     void cl(int n) {
         n <<= 2;
         sum.resize(0); sum.resize(n);
@@ -20,7 +21,7 @@ struct TR {
         int mid = l + r >> 1;
         sum[rt << 1] += ly[rt] * (mid - l + 1);
         sum[rt << 1 | 1] += ly[rt] * (r - mid);
-        ly[rt << 1] = ly[rt << 1 | 1] = ly[rt];
+        ly[rt << 1] += ly[rt], ly[rt << 1 | 1] += ly[rt];
         ly[rt] = 0;
     }
     void modify(int rt, int l, int r, int ql, int qr, int x) {
@@ -35,23 +36,13 @@ struct TR {
         if(qr > mid) modify(rt << 1 | 1, mid + 1, r, ql, qr, x);
         push_up(rt);
     }
-    int query(int rt, int l, int r, int ql, int qr) {
+    ll query(int rt, int l, int r, int ql, int qr) {
         if(ql <= l && qr >= r) return sum[rt];
         push_down(rt, l, r);
         int mid = l + r >> 1, ans = 0;
         if(ql <= mid) ans += query(rt << 1, l, mid, ql, qr);
         if(qr > mid) ans += query(rt << 1 | 1, mid + 1, r, ql, qr);
         return ans;
-    }
-    void debug(int rt, int l, int r) {
-        if(l == r) {
-            printf("%d ", sum[rt]);
-            return;
-        }
-        push_down(rt, l, r);
-        int mid = l + r >> 1;
-        debug(rt << 1, l, mid);
-        debug(rt << 1 | 1, mid + 1, r);
     }
 }tr;
 
@@ -62,15 +53,13 @@ void solve(int l, int r, const vector<Ope> & q) {
     }
     int mid = l + r >> 1;
     vector<Ope> ql, qr;
-    for(Ope i : q) {
-        if(i.mode) {
-            int tmp = tr.query(1, 1, n, i.l, i.r);
-            if(tmp >= i.k) qr.push_back(i);
-            else i.k -= tmp, ql.push_back(i);
-        } else {
-            if(i.k > mid) tr.modify(1, 1, n, i.l, i.r, 1), qr.push_back(i);
-            else ql.push_back(i);
-        }
+    for(Ope i : q) if(i.mode) {
+        ll tmp = tr.query(1, 1, n, i.l, i.r);
+        if(tmp >= i.k) qr.push_back(i);
+        else i.k -= tmp, ql.push_back(i);
+    } else {
+        if(i.k > mid) tr.modify(1, 1, n, i.l, i.r, 1), qr.push_back(i);
+        else ql.push_back(i);
     }
     for(Ope i : qr) if(!i.mode) tr.modify(1, 1, n, i.l, i.r, -1);
     solve(l, mid, ql); solve(mid + 1, r, qr);
@@ -81,7 +70,7 @@ int main() {
     tr.cl(n);
     vector<Ope> q;
     for(int i = 1; i <= m; i++) {
-        int mode, a, b, c; scanf("%d%d%d%d", &mode, &a, &b, &c);
+        int mode, a, b; ll c; scanf("%d%d%d%lld", &mode, &a, &b, &c);
         q.push_back({mode - 1, a, b, c, (mode - 1) ? ++Q : i});
     }
     solve(-50100, 50100, q);
