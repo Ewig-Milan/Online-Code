@@ -1,19 +1,14 @@
-#include <iostream>
-#include <random>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
     freopen("#data.in", "w", stdout);
-    int n = 1000; // 你可以修改 n 的值
+    srand(time(0));
+    int n = 100000; // 你可以修改 n 的值
     cout << n << endl;
-
-    random_device rd;
-    mt19937 gen(rd());
-
-    for (int i = 1; i <= n; ++i) {
-        uniform_int_distribution<> dis(1, n);
-        int s = dis(gen);
-        cout << s << (i == n ? '\n' : ' ');
+    for (int i = 1; i <= 16; ++i) {
+        printf("%d ", rand() % 100000000);
     }
+    putchar('\n');
     return 0;
 }
