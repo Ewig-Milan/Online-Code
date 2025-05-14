@@ -35,7 +35,10 @@ void solve(int l, int r, vector<int> & q) {
         t.modify(met[i].l, met[i].a), t.modify(met[i].r + 1, -met[i].a);
     for(int i : q) {
         int tmp = 0;
-        for(int j : stn[i].o) tmp += t.query(j) + t.query(j + m);
+        for(int j : stn[i].o) {
+			tmp += t.query(j) + t.query(j + m);
+        	if(tmp >= stn[i].p) break;
+		}
         if(tmp >= stn[i].p) ql.push_back(i);
         else stn[i].p -= tmp, qr.push_back(i);
     }
