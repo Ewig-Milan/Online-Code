@@ -2,14 +2,14 @@
 #define Lb(x) (x & -x)
 using namespace std;
 
-const int N = 800100;
+const int N = 2400100;
 
 int n, m, q, ans[N];
 struct Node {bool mode; int x, y, k, id;} Q[N], tmp[N]; // 0修改 1询问
 int tmp_cnt;
 
 struct Bit_T {
-    int sum[500100];
+    int sum[2000100];
     void modify(int x, int delta) {x++; while(x - 1 <= n) sum[x] += delta, x += Lb(x);}
     int query(int x) {
         x++;
@@ -46,7 +46,8 @@ void solve(int l, int r) {
 }
 
 int main() {
-    scanf("%d", &n);
+    int nothing;
+    scanf("%d%d", &nothing, &n);
     while(true) {
         int mode; scanf("%d", &mode);
         if(mode == 3) break;
