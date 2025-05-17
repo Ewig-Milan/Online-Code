@@ -36,19 +36,17 @@ void solve(int l, int r) {
 	solve(l, mid); solve(mid + 1, r); // 按 位置升序 排好了 
 	int i = mid, j = r;
 	tmp_cnt = 0;
-	while(i >= l && j > mid) { //位置在它后面 数值比它小
+	while(i >= l && j > mid) //位置在它后面 数值比它小
 		if(Q[i].id > Q[j].id) t.modify(Q[i].a, 1), i--;
 		else ans[Q[j].t] += t.query(Q[j].a), j--;
-	}
 	while(i >= l) t.modify(Q[i].a, 1), i--;
 	while(j > mid) ans[Q[j].t] += t.query(Q[j].a), j--;
 	for(int i = l; i <= mid; i++) t.modify(Q[i].a, -1);
 
     i = l, j = mid + 1;
-    while(i <= mid && j <= r) {
+    while(i <= mid && j <= r)
 		if(Q[i].id < Q[j].id) t.modify(Q[i].a, 1), tmp[++tmp_cnt] = Q[i++];
 		else ans[Q[j].t] += t.query(n) - t.query(Q[j].a), tmp[++tmp_cnt] = Q[j++];
-    }
 	while(i <= mid) t.modify(Q[i].a, 1), tmp[++tmp_cnt] = Q[i++];
 	while(j <= r) ans[Q[j].t] += t.query(n) - t.query(Q[j].a), tmp[++tmp_cnt] = Q[j++];
 	for(int i = l; i <= mid; i++) t.modify(Q[i].a, -1);
