@@ -14,7 +14,7 @@ const PLL O = {0, 0};
 int n;
 ll C[N], T[N], f[N], S;
 vector<int> cvh; //convex hull
-int l, r;
+int l, r = -1;
 
 
 ll X(int id) {return C[id];}
