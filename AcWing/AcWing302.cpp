@@ -39,21 +39,21 @@ bool cmp_k(PLL a, PLL b, PLL c, PLL d) { // k(ab) >= k(cd)
 // 这三个完全不用变
 PLL P(ll id) {return {X(id), Y(id)};}
 
-int get_ans(ll k) {
- 	while(l < r && cmp_k(O, {1, k}, P(cvh[l]), P(cvh[l + 1]))) l++;
-     return cvh[l];
-}
 // int get_ans(ll k) {
-// 	l = 0, r = cvh.size() - 1;
-// 	while(l < r) {
-// 		int mid = l + r >> 1;
-// 		if(cmp_k(P(cvh[mid]), P(cvh[mid + 1]), O, {1, k})) r = mid;
-// 		else l = mid + 1;
-// 	}
-// 	int tmp = cvh[l];
-// 	l = 0, r = cvh.size() - 1;
-// 	return tmp;
+//  	while(l < r && cmp_k(O, {1, k}, P(cvh[l]), P(cvh[l + 1]))) l++;
+//      return cvh[l];
 // }
+int get_ans(ll k) {
+	l = 0, r = cvh.size() - 1;
+	while(l < r) {
+		int mid = l + r >> 1;
+		if(cmp_k(P(cvh[mid]), P(cvh[mid + 1]), O, {1, k})) r = mid;
+		else l = mid + 1;
+	}
+	int tmp = cvh[l];
+	l = 0, r = cvh.size() - 1;
+	return tmp;
+}
 
 void add_back(int x) {
 	while(l < r && cmp_k(P(cvh[r - 1]), P(x), P(cvh[r]), P(x))) r--;
