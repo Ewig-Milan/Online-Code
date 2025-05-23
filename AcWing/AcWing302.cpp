@@ -14,11 +14,11 @@ const PLL O = {0, 0};
 int n;
 ll C[N], T[N], f[N], S;
 vector<int> cvh; //convex hull
-int l, r = -1;
+int l, r = -1/*upd 5.23*/;
 
 
-ll X(int id) {return C[id];}
-ll Y(int id) {return f[id];}
+ll X(int j) {return C[j];} // upd 5.23 将变量名 id 改为了 j（这样让誊写公式便捷了一些） 
+ll Y(int j) {return f[j];}
 ll F(int i, int j) {return f[j] - (S + T[i]) * C[j] + S * C[n] + T[i] * C[i];}
 // 以上三个是随题变化的
 
@@ -37,7 +37,7 @@ bool cmp_k(PLL a, PLL b, PLL c, PLL d) { // k(ab) >= k(cd)
 
 
 // 这三个完全不用变
-PLL P(ll id) {return {X(id), Y(id)};}
+PLL P(int id/*upd 5.23*/) {return {X(id), Y(id)};}
 
 // int get_ans(ll k) {
 //  	while(l < r && cmp_k(O, {1, k}, P(cvh[l]), P(cvh[l + 1]))) l++;
