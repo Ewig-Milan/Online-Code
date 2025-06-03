@@ -28,7 +28,10 @@ bool work() {
 		while(q.front().r < i) q.pop_front();
 		P fr = q.front();
 		f[i] = F(i, fr.p), choice[i] = fr.p + 1;
+		
 		if(F(n, q.back().p) < F(n, i)) continue;
+        // 首先看它能否至少更新一个 这里很容易忘
+
 		while(q.back().l > i && F(q.back().l, i) <= F(q.back().l, q.back().p)) q.pop_back();
 		P & bk = q.back();
 		int l = bk.l, r = bk.r;

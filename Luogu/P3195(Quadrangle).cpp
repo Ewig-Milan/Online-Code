@@ -16,11 +16,14 @@ void work() {
     for(int i = 1; i <= n; i++) {
         while(q.front().r < i) q.pop_front();
         f[i] = F(i, q.front().p);
+        
 		if(F(n, q.back().p) < F(n, i)) continue;
-        while(q.back().l > i && F(q.back().l, i) <= F(q.back().l, q.back().p)) q.pop_back();
+        // 首先看它能否至少更新一个 这里很容易忘
+
+        while(q.back().l > i /*它能更新的至多从 i + 1 开始*/ && F(q.back().l, i) <= F(q.back().l, q.back().p)) q.pop_back();
         P & bk = q.back();
         int l = bk.l, r = bk.r;
-        while(l < r) {
+        while(l < r) { // 这里的写法 l 指最后一个旧的大于 i 的数
             int mid = l + r + 1 >> 1;
             if(F(mid, bk.p) < F(mid, i)) l = mid;
             else r = mid - 1;
