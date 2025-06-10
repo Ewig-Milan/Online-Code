@@ -1,37 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 610;
+const int N = 310;
 
 int n, m;
+int f[N][N];
 
-struct Edge {int next, to;} e[N];
+int s[N];
+int h[N], e[N << 1], ne[N << 1], idx;
+void add(int a, int b) {e[idx] = b, ne[idx] = h[a], h[a] = idx++;}
 
-int rt, h[N], idx, v[N], f[N][N];
-void add(int x, int y) {
-    e[++idx].next = h[x];
-    h[x] = idx;
-    e[idx].to = y;
-}
-
-void DP(int u, int t) {
-    if(t <= 0) return;
-    for(int i = h[u]; i; i = e[i].next) {
-        int j = e[i].to;
-        for(int k = 0; k < t; ++k) f[j][k] = f[u][k] + v[j];
-        DP(j, t - 1);
-        for(int k = 1; k <= t; ++k) f[u][k] = max(f[u][k], f[j][k - 1]);
+void DP(int x) {
+    for(int i = 1; i <= m; i++) f[x][i] = -1e9;
+    if(x) f[x][1] = s[x];
+    for(int i = h[x]; ~i; i = ne[i]) {
+        int j = e[i];
+        DP(j);
+        for(int p = m; p >= 0; p--) // 父亲
+        for(int k = 0; k + p <= m; k++) // 儿子
+            if(p || !x) f[x][p + k] = max(f[x][p + k], f[x][p] + f[j][k]);
     }
 }
 
 int main() {
+    memset(h, -1, sizeof h);
+    
     scanf("%d%d", &n, &m);
     for(int i = 1; i <= n; i++) {
-        int a; scanf("%d%d", &a, &v[i]);
+        int a; scanf("%d%d", &a, &s[i]);
         if(a) add(a, i);
         else add(0, i);
     }
-    DP(0, m);
+    DP(0);
     printf("%d", f[0][m]);
     return 0;
 }
