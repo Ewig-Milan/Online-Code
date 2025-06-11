@@ -2,35 +2,33 @@
 #define int long long
 using namespace std;
 
-const int N = 32100, K = 110;
+const int N = 16100, M = 110;
 
-struct Node {
-	int s, l, p;
-	friend bool operator < (const Node & a, const Node & b) {
-		return a.s < b.s;
-	}
-}Q[K];
+int n, m;
+int f[M][N];
+int q[N], l, r;
 
-int k, n;
-int S[K], L[K], P[K];
-int f[K][N];
+struct Node {int s, l, p;} w[M];
+bool cmp(Node a, Node b) {return a.s < b.s;}
 
-signed main() {
-    scanf("%lld%lld", &n, &k);
-    for(int i = 1; i <= k; i++) scanf("%lld%lld%lld", &Q[i].l, &Q[i].p, &Q[i].s);
-	sort(Q + 1, Q + k + 1);	
-	for(int i = 1; i <= k; i++) L[i] = Q[i].l, P[i] = Q[i].p, S[i] = Q[i].s;
-
-    for(int i = 0; i <= k; i++) for(int j = 0; j <= n; j++) f[i][j] = -2e9;
-    f[0][0] = 0;
-    for(int i = 1; i <= k; i++) {
-        f[i][0] = 0;
-        for(int j = S[i] + L[i] - 1, ma = -2e9; j >= S[i]; j--) {
-            if(j >= L[i]) ma = max(ma, f[i - 1][j - L[i]] - P[i] * (j - L[i]));
-            f[i][j] = max(P[i] * j + ma, f[i - 1][j]);
-            printf("f[%lld][%lld] = %lld\n", i, j, f[i][j]);
+signed main()
+{
+    scanf("%lld%lld", &n, &m);
+    for(int i = 1; i <= m; i++) scanf("%lld%lld%lld", &w[i].l, &w[i].p, &w[i].s);
+    sort(w + 1, w + 1 + m, cmp);
+    for(int i = 1; i <= m; i++) {
+        l = 1, r = 0;
+        for(int j = 1; j <= n; j++) {
+            f[i][j] = max(f[i - 1][j], f[i][j - 1]);
+            if(j <= w[i].s) {
+                while(l <= r && f[i - 1][j - 1] - j * w[i].p >= f[i - 1][q[r] - 1] - q[r] * w[i].p) r--;
+                q[++r] = j;
+            }
+            if(j < w[i].s || j >= w[i].s + w[i].l) continue;
+            while(l <= r && q[l] <= j - w[i].l) l++;
+            f[i][j] = max(f[i][j], f[i - 1][q[l] - 1] +(j - q[l] + 1) * w[i].p);
         }
     }
-    printf("%lld", f[k][n]);
+    printf("%lld", f[m][n]);
     return 0;
 }
