@@ -1,34 +1,24 @@
 #include <bits/stdc++.h>
-#define int long long
 using namespace std;
 
-const int N = 16100, M = 110;
+const int N = 16100, K = 110;
 
-int n, m;
-int f[M][N];
-int q[N], l, r;
+int k, n;
+int f[K][N];
+struct Node {int s, l, p;} Q[K];
+bool cmp(const Node & a, const Node & b) {return a.s < b.s;}
 
-struct Node {int s, l, p;} w[M];
-bool cmp(Node a, Node b) {return a.s < b.s;}
-
-signed main()
-{
-    scanf("%lld%lld", &n, &m);
-    for(int i = 1; i <= m; i++) scanf("%lld%lld%lld", &w[i].l, &w[i].p, &w[i].s);
-    sort(w + 1, w + 1 + m, cmp);
-    for(int i = 1; i <= m; i++) {
-        l = 1, r = 0;
-        for(int j = 1; j <= n; j++) {
-            f[i][j] = max(f[i - 1][j], f[i][j - 1]);
-            if(j <= w[i].s) {
-                while(l <= r && f[i - 1][j - 1] - j * w[i].p >= f[i - 1][q[r] - 1] - q[r] * w[i].p) r--;
-                q[++r] = j;
-            }
-            if(j < w[i].s || j >= w[i].s + w[i].l) continue;
-            while(l <= r && q[l] <= j - w[i].l) l++;
-            f[i][j] = max(f[i][j], f[i - 1][q[l] - 1] +(j - q[l] + 1) * w[i].p);
+int main() {
+    scanf("%d%d", &n, &k);
+    for(int i = 1; i <= k; i++) scanf("%d%d%d", &Q[i].l, &Q[i].p, &Q[i].s);
+	sort(Q + 1, Q + k + 1, cmp);
+    for(int i = 1; i <= k; i++) {
+        for(int j = Q[i].s + Q[i].l - 1, ma = -2e9; j >= Q[i].s; j--) {
+            if(j >= Q[i].l) ma = max(ma, f[i - 1][j - Q[i].l] - Q[i].p * (j - Q[i].l));
+            if(j <= n) f[i][j] = Q[i].p * j + ma;
         }
-    }
-    printf("%lld", f[m][n]);
+        for(int j = 1; j <= n; j++) f[i][j] = max(f[i][j], max(f[i][j - 1], f[i - 1][j]));
+	}
+    printf("%d", f[k][n]);
     return 0;
 }
