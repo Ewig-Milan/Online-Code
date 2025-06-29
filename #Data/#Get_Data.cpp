@@ -1,14 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const int N = 100100;
+
+int a[N << 1];
+
 int main() {
     freopen("#data.in", "w", stdout);
-    srand(time(0));
-    int n = 100000; // 你可以修改 n 的值
-    cout << n << endl;
-    for (int i = 1; i <= 16; ++i) {
-        printf("%d ", rand() % 100000000);
-    }
+    
+    int n = 200;
+    
+    printf("%d\n", n);
+    for(int i = 1; i <= (n << 1) - 1; i++) a[i] = i;
+    random_shuffle(a + 1, a + (n << 1));
+    for(int i = 1; i <= (n << 1) - 1; i++) printf("%d ", a[i]);
     putchar('\n');
     return 0;
 }
