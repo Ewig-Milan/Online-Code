@@ -15,7 +15,7 @@ void add(int a, int b, int c, int d) {
 int dis[N], can[N];
 bool vis[N];
 bool SPFA(bool mode) {
-    for(int i = 0; i < N; i++) dis[i] = mode ? 0 : INF;
+    for(int i = 0; i < N; i++) dis[i] = mode ? -INF : INF;
     memset(vis, 0, sizeof vis);
     queue<int> q;
     dis[S] = 0, q.push(S), vis[S] = 1;
@@ -31,7 +31,7 @@ bool SPFA(bool mode) {
             }
         }
     }
-    return mode ? (dis[T] > 0) : (dis[T] < INF);
+    return mode ? (dis[T] > -INF) : (dis[T] < INF);
 }
 
 int dfs(int x, int lim) {
