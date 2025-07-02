@@ -6,14 +6,14 @@ const int N = 100100;
 int a[N << 1];
 
 int main() {
+    srand(time(0));
     freopen("#data.in", "w", stdout);
-    
-    int n = 200;
-    
-    printf("%d\n", n);
-    for(int i = 1; i <= (n << 1) - 1; i++) a[i] = i;
-    random_shuffle(a + 1, a + (n << 1));
-    for(int i = 1; i <= (n << 1) - 1; i++) printf("%d ", a[i]);
-    putchar('\n');
+    int T = 1000;
+    printf("%d\n", T);
+    while(T--) {
+        printf("%d %d\n", 
+            (long long)rand() * rand() % (long long)1e9, 
+            (long long)rand() * rand() * rand() % (long long)1e9);
+    }
     return 0;
 }
