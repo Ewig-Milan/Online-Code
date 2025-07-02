@@ -66,7 +66,7 @@ int main() {
         add(a, b, c);
     }
     max_flow = dinic();
-    db l = 0, r = 10000;
+    db l = 0, r = 50000;
     while(r - l > eps) {
         db mid = (l + r) / 2;
         if(check(mid)) r = mid;
