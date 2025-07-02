@@ -62,22 +62,19 @@ bool dij() {
         }
     }
     memset(vis, 0, sizeof vis);
-    for(int i = 1; i <= n; i++) pe[i] += dis[i];
+    for(int i = 0; i < N; i++) pe[i] += dis[i];
     return dis[T] < INF;
 }
 
 int dfs(int x, int lim) {
     if(x == T) return lim;
-    // if(x == S) puts(".");
     vis[x] = 1;
     int flow = 0;
     for(int &i = can[x]; ~i && flow < lim; i = ne[i]) {
-        // if(x == S) printf("%d\n", i);
         int j = e[i];
         if(v[i] + pe[x] - pe[j] == 0 && !vis[j] && ca[i]) {
-            if(j == S) puts(".");
             int tmp = dfs(j, min(ca[i], lim - flow));
-            if(!tmp) vis[j] = 1;
+            if(!tmp) vis[j] = 1; // 此处写法正确性已验证
             else flow += tmp, ca[i] -= tmp, ca[i ^ 1] += tmp, cost += tmp * v[i];
         }
     }
@@ -87,10 +84,8 @@ int dfs(int x, int lim) {
 
 int PD() {
     cost = 0, SPFA();
-    while(dij()) {
-        puts(".");
-        while(dfs(S, INF));
-    }
+    int mf = 0, tmp;
+    while(dij()) while(tmp = dfs(S, INF)) mf += tmp;
     return cost;
 }
 

@@ -1,3 +1,6 @@
+//
+//  Primal-Dual 原始对偶算法 + Dinic(个人融合)
+//
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -55,7 +58,7 @@ bool dij() {
         }
     }
     memset(vis, 0, sizeof vis);
-    for(int i = 1; i <= n; i++) pe[i] += dis[i];
+    for(int i = 0; i < N; i++) pe[i] += dis[i]; // 这是个大坑 有的时候会碰不到 T (或其他点) 特别难调!!!
     return dis[T] < INF;
 }
 
@@ -67,7 +70,7 @@ int dfs(int x, int lim) {
         int j = e[i];
         if(v[i] + pe[x] - pe[j] == 0 && !vis[j] && ca[i]) {
             int tmp = dfs(j, min(ca[i], lim - flow));
-            if(!tmp) vis[j] = 1;
+            if(!tmp) vis[j] = 1; // 此处写法正确性已验证
             else flow += tmp, ca[i] -= tmp, ca[i ^ 1] += tmp, cost += tmp * v[i];
         }
     }
