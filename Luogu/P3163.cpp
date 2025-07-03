@@ -1,5 +1,6 @@
 //
 // 多（双）源汇限制源汇点（要求点对点地流）
+// 那么 可以考虑做两遍 两个都正着流 和 一个正着流一个反着流
 //
 #include <bits/stdc++.h>
 using namespace std;
