@@ -1,28 +1,8 @@
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
-//致自己 后缀数组板子
+// 致自己 后缀数组板子
 
-//最终版 (real? 
+// 最终版 (real? 
 //
-//请为自己负责：
-//AC后请自测下面的 Hack数据 
+// 请AC后自测下面的 Hack数据 
 //
 // (Linux, 请勿用防爆的Windows)
 // int main() {freopen("test.in", "w", stdout); for(int i = 1; i <= 1000000; i++) putchar('z'); putchar('\n'); return 0;}
@@ -35,7 +15,7 @@ const int N = 1000100;
 char c[N];
 int n;
 
-int sa[N], ht[N], rk[N << 1], T[N], rk_cpy[N << 1], se_st[N];//4.3补丁 
+int sa[N], ht[N], rk[N << 1], T[N], rk_cpy[N << 1], se_st[N]; // 4.3补丁 
 
 void get_SA(char s[]) {
     int m = 128;
@@ -65,10 +45,10 @@ void get_SA(char s[]) {
 void get_ht(char s[]) {
     ht[1] = 0;
 	for(int i = 1, k = 0; i <= n; i++) {
-		if(rk[i] == 1) continue;//4.3补丁 
+		if(rk[i] == 1) continue; // 4.3补丁 
 		if(k) k--;
 		while(s[i + k] == s[sa[rk[i] - 1] + k] &&
-			i + k <= n && sa[rk[i] - 1] + k <= n) k++; //4.9补丁 
+			i + k <= n && sa[rk[i] - 1] + k <= n) k++; // 4.9补丁 
 		ht[rk[i]] = k;
 	}
 }
