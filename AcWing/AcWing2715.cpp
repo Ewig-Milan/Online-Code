@@ -30,8 +30,7 @@ void get_SA(char s[]) {
         for(int i = 0; i <= m; i++) T[i] = 0;
         for(int i = 1; i <= n; i++) T[rk[i]]++;
         for(int i = 2; i <= m; i++) T[i] += T[i - 1];
-        for(int i = n; i; i--)
-        sa[T[rk[se_st[i]]]--] = se_st[i];
+        for(int i = n; i; i--) sa[T[rk[se_st[i]]]--] = se_st[i];
         swap(rk, rk_cpy); t = 0;
         for(int i = 1; i <= n; i++) {
             if(rk_cpy[sa[i]] != rk_cpy[sa[i - 1]] ||
