@@ -71,11 +71,15 @@ signed main() {
             int a; scanf("%lld", &a);
             edg[a] = 1;
         }
-        for(int i = 1; i < n; i++) if(edg[i]) add(E[i - 1].first, E[i - 1].second, 1);
-        else add(E[i - 1].first, E[i - 1].second, 0);
+        for(int i = 1; i < n; i++)
+            if(edg[i]) add(E[i - 1].first, E[i - 1].second, 1);
+            else add(E[i - 1].first, E[i - 1].second, 0);
+        
         int ANS = 1;
         for(int i = 1; i <= n; i++) w[i] = inv[d[i] - 1], ANS *= fact(d[i] - 1), ANS %= mod;
+
         DP(1, -1); // 后面传的是父亲边
+        
         printf("%lld\n", ans * ANS % mod);
     }
     return 0;
