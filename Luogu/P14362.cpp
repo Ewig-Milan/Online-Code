@@ -62,6 +62,9 @@ ll prim() {
 }
 
 int main() {
+
+    // double start = clock();
+
     memset(h, -1, sizeof h);
     scanf("%d%d%d", &n, &m, &k);
     for(int i = 1; i <= m; i++) {
@@ -82,6 +85,7 @@ int main() {
         cc.resize(0); Nn = n, tmp = 0;
         for(int i = 1; i <= k; i++) if(stat & (1 << (i - 1))) cc.push_back(i), Nn++, tmp += cns[i][0];
         ans = min(ans, prim());
+        // if(1000 * (clock() - start) > 1900 * CLOCKS_PER_SEC) break;
     }
     printf("%lld", ans);
     return 0;
