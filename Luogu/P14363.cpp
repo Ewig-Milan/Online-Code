@@ -49,8 +49,11 @@ int main() {
     scanf("%d%d", &n, &q);
     for(int i = 1; i <= n; i++) {
         scanf("%s", s1 + 1); scanf("%s", s2 + 1);
+        int r = strlen(s1 + 1);
+        while(r >= 1 && s1[r] == s2[r]) r--;
+        if(!r) continue;
         fusion();
-        insert(fus + 1);
+        insert(fus);
     }
     build();
     while(q--) {
